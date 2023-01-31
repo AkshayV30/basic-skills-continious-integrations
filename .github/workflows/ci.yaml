@@ -1,0 +1,20 @@
+name: continious integrations
+on
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - ci
+
+jobs:
+  on_start:
+    name: On start
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Run markdown lint
+        run: |
+          npm install remark-cli remark-preset-lint-consistent
+          npx remark . --use remark-preset-lint-consistent --frail
